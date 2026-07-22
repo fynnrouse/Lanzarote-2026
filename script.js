@@ -1,7 +1,7 @@
 // Date and Day Calculation
 function updateDateInfo() {
     const today = new Date();
-    const holidayStart = new Date(2026, 6, 1); // July 1, 2026
+    const holidayStart = new Date(2026, 8, 18); // July 1, 2026
     
     // Format current date
     const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
