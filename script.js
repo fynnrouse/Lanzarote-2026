@@ -1,19 +1,30 @@
 // Date and Day Calculation
 function updateDateInfo() {
     const today = new Date();
-    const holidayStart = new Date(2026, 8, 18); // July 1, 2026
-    
+    // Holiday start: Tue 18 Aug 2026 (months are 0-based: 7 = August)
+    const holidayStart = new Date(2026, 7, 18);
+    const holidayEnd = new Date(2026, 7, 28); // Fri 28 Aug 2026
+
     // Format current date
     const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
     const formattedDate = today.toLocaleDateString('en-US', options);
     document.getElementById('currentDate').textContent = formattedDate;
-    
-    // Calculate day number
-    const dayDifference = Math.floor((today - holidayStart) / (1000 * 60 * 60 * 24)) + 1;
-    document.getElementById('dayNumber').textContent = `Day ${dayDifference}`;
-    
-    // Update emoji based on day
-    updateEmoji(dayDifference);
+
+    // Calculate day number relative to holidayStart
+    let dayDifference = Math.floor((today - holidayStart) / (1000 * 60 * 60 * 24)) + 1;
+
+    // Clamp and display sensible messages
+    if (today < holidayStart) {
+        document.getElementById('dayNumber').textContent = 'Starts Tue 18 Aug';
+    } else if (today > holidayEnd) {
+        document.getElementById('dayNumber').textContent = 'Trip ended';
+    } else {
+        // Ensure day is within 1..11
+        dayDifference = Math.min(Math.max(dayDifference, 1), 11);
+        document.getElementById('dayNumber').textContent = `Day ${dayDifference}`;
+        // Update emoji based on day
+        updateEmoji(dayDifference);
+    }
 }
 
 function updateEmoji(dayNumber) {
@@ -71,7 +82,7 @@ seeMoreBtn.addEventListener('click', () => {
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
     updateDateInfo();
-    
+
     // Update date/day/emoji every minute
     setInterval(updateDateInfo, 60000);
 });
