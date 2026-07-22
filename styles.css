@@ -1,0 +1,323 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #f5f5f5;
+    overflow-x: hidden;
+}
+
+/* Menu Button */
+.menu-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    background: #ff6b35;
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    font-size: 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.3s ease;
+}
+
+.menu-button:active {
+    background-color: #e55a2b;
+}
+
+/* Sidebar Navigation */
+.sidebar {
+    position: fixed;
+    left: -100%;
+    top: 0;
+    width: 75%;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transition: left 0.3s ease;
+    z-index: 999;
+    padding-top: 60px;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    font-size: 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.close-button:active {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.nav-menu {
+    list-style: none;
+    padding: 20px;
+}
+
+.nav-menu li {
+    margin: 15px 0;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    display: block;
+    padding: 15px 20px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-link:active {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.nav-link.locked {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Main Container */
+.container {
+    padding: 80px 20px 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Header Section */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 30px 20px;
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.date-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.current-date {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+.day-number {
+    font-size: 18px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+
+.date-emoji {
+    font-size: 24px;
+}
+
+/* Featured Image */
+.featured-image {
+    margin-bottom: 25px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Action Section */
+.action-section {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 18px;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    active: {
+        transform: scale(0.98);
+    }
+}
+
+.submit-button:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 6px rgba(255, 107, 53, 0.3);
+}
+
+/* Scoreboard Section */
+.scoreboard-section {
+    margin-bottom: 30px;
+}
+
+.scoreboard-section h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.scoreboard {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.score-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.score-card:active {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.rank {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-weight: 700;
+    border-radius: 50%;
+    font-size: 16px;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.restaurant-name {
+    flex-grow: 1;
+    font-weight: 500;
+    color: #333;
+    font-size: 16px;
+}
+
+.score {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ff6b35;
+    min-width: 40px;
+    text-align: right;
+}
+
+/* Footer Section */
+.footer-section {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.see-more-button {
+    width: 100%;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #667eea;
+    background: white;
+    border: 2px solid #667eea;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.see-more-button:active {
+    background: #f5f5f5;
+    transform: scale(0.98);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+    .container {
+        padding: 70px 15px 15px;
+    }
+
+    .title {
+        font-size: 28px;
+    }
+
+    .submit-button,
+    .see-more-button {
+        padding: 16px;
+        font-size: 16px;
+    }
+
+    .scoreboard-section h2 {
+        font-size: 20px;
+    }
+
+    .score-card {
+        padding: 12px;
+    }
+
+    .restaurant-name {
+        font-size: 14px;
+    }
+}
