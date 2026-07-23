@@ -65,11 +65,118 @@ document.querySelector('.nav-link.locked').addEventListener('click', (e) => {
     alert('🔒 Setup is locked!');
 });
 
-// Submit Button Handler
+// Page Navigation
+function showPage(pageId) {
+    const pages = document.querySelectorAll('.page-section');
+    pages.forEach(page => {
+        page.classList.remove('active');
+    });
+    document.getElementById(pageId).classList.add('active');
+}
+
+// Submission Form Handling
+let formSubmitted = false;
+
+// Person Selection
+const personButtons = document.querySelectorAll('.person-btn');
+personButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+        // Remove active class from all person buttons
+        personButtons.forEach(b => b.classList.remove('active'));
+        // Add active class to clicked button
+        this.classList.add('active');
+        // Store selected person
+        document.getElementById('selectedPerson').value = this.dataset.person;
+    });
+});
+
+// Score Selection (Food, Service, Ambiance)
+function setupScoreButtons(containerSelector, scoreInputId) {
+    const container = document.querySelector(containerSelector);
+    const buttons = container.querySelectorAll('.score-btn');
+    
+    buttons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active class from all buttons in this category
+            buttons.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+            // Store selected score
+            document.getElementById(scoreInputId).value = this.dataset.score;
+        });
+    });
+}
+
+setupScoreButtons('#foodButtons', 'foodScore');
+setupScoreButtons('#serviceButtons', 'serviceScore');
+setupScoreButtons('#ambianceButtons', 'ambianceScore');
+
+// Form Submission
+const formSubmitBtn = document.getElementById('formSubmitBtn');
+formSubmitBtn.addEventListener('click', async function() {
+    // Validate form
+    const person = document.getElementById('selectedPerson').value;
+    const food = document.getElementById('foodScore').value;
+    const service = document.getElementById('serviceScore').value;
+    const ambiance = document.getElementById('ambianceScore').value;
+    const comments = document.getElementById('comments').value;
+
+    if (!person || !food || !service || !ambiance) {
+        alert('Please select a person and scores for Food, Service, and Ambiance.');
+        return;
+    }
+
+    if (formSubmitted) {
+        alert('You have already submitted your scores.');
+        return;
+    }
+
+    // Get restaurant name (placeholder until admin settings are ready)
+    const restaurant = document.getElementById('restaurantDisplay').textContent;
+
+    // Prepare data for Google Apps Script
+    const data = {
+        restaurant: restaurant,
+        person: person,
+        food: parseInt(food),
+        service: parseInt(service),
+        ambiance: parseInt(ambiance),
+        comment: comments
+    };
+
+    try {
+        // Submit to Google Apps Script
+        const response = await fetch('https://script.google.com/macros/s/AKfycbzxUnoBsjH5rmqtvg9agQhoJl27nrIiegHLHWvw_xPOcWKcCtfZOKkffmzGKST6rVmV/exec', {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify(data)
+        });
+
+        // Mark form as submitted
+        formSubmitted = true;
+
+        // Hide form and show thank you message
+        document.getElementById('submissionForm').style.display = 'none';
+        document.getElementById('thankYouMessage').style.display = 'block';
+
+    } catch (error) {
+        console.error('Error submitting form:', error);
+        alert('Error submitting scores. Please try again.');
+    }
+});
+
+// Return to Home Button
+const returnHomeBtn = document.getElementById('returnHomeBtn');
+if (returnHomeBtn) {
+    returnHomeBtn.addEventListener('click', () => {
+        showPage('homePage');
+    });
+}
+
+// Submit Button Handler (opens submission page)
 const submitBtn = document.getElementById('submitBtn');
 submitBtn.addEventListener('click', () => {
-    alert('Submit page coming soon!');
-    // Future: Navigate to submit page
+    showPage('submissionPage');
 });
 
 // See More Button Handler
@@ -85,4 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update date/day/emoji every minute
     setInterval(updateDateInfo, 60000);
+
+    // Set initial restaurant name (placeholder - will be replaced with admin settings)
+    document.getElementById('restaurantDisplay').textContent = 'Restaurant Name';
 });
