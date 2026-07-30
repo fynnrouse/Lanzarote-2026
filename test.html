@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>API Test</title>
+</head>
+
+<body>
+
+<h1>API Test</h1>
+
+<pre id="output">Loading...</pre>
+
+<script src="api.js"></script>
+
+<script>
+
+(async () => {
+
+    try {
+
+        const settings = await API.getSettings();
+
+        document.getElementById("output").textContent =
+            JSON.stringify(settings, null, 2);
+
+    }
+
+    catch (error) {
+
+        document.getElementById("output").textContent =
+            error.message;
+
+    }
+
+})();
+
+</script>
+
+</body>
+
+</html>
