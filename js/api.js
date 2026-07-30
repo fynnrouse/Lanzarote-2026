@@ -357,13 +357,199 @@ API.getTodaysScores = async function () {
 
 
 /***************************************************************
- * PLACEHOLDERS
+ * PUBLIC WRITE FUNCTIONS
  *
- * Implemented in Response 3
+ * Functions that modify backend data.
  ***************************************************************/
 
-API.submitScore = null;
 
-API.updateSettings = null;
+/**
+ * Submit one participant's scores.
+ *
+ * data =
+ * {
+ *   person,
+ *   restaurant,
+ *   food,
+ *   service,
+ *   ambiance
+ * }
+ */
 
-API.deleteTodaysScores = null;
+API.submitScore = async function (data) {
+
+    API.log("Submitting score...", data);
+
+    const response = await API.post(
+        "submitScore",
+        data
+    );
+
+    if (!response.success) {
+
+        throw new Error(response.message);
+
+    }
+
+    return response;
+
+};
+
+
+
+/**
+ * Update website settings.
+ *
+ * data =
+ * {
+ *   holidayName,
+ *   holidayDay,
+ *   currentRestaurant,
+ *   currentRestaurantTime
+ * }
+ */
+
+API.updateSettings = async function (data) {
+
+    API.log("Updating settings...", data);
+
+    const response = await API.post(
+        "updateSettings",
+        data
+    );
+
+    if (!response.success) {
+
+        throw new Error(response.message);
+
+    }
+
+    return response;
+
+};
+
+
+
+/**
+ * Deletes every submission for the
+ * currently selected restaurant.
+ */
+
+API.deleteTodaysScores = async function () {
+
+    API.log("Deleting today's scores...");
+
+    const response = await API.post(
+        "deleteTodaysScores"
+    );
+
+    if (!response.success) {
+
+        throw new Error(response.message);
+
+    }
+
+    return response;
+
+};
+
+/****************************************************************
+ * API INITIALISATION
+ * --------------------------------------------------------------
+ * Final section of the API library.
+ *
+ * Performs a small amount of startup work and provides
+ * utility functions that are useful to every page.
+ ****************************************************************/
+
+
+/**
+ * Tests whether the backend is reachable.
+ *
+ * Returns:
+ *      true  - Backend online
+ *      false - Backend unavailable
+ */
+
+API.isOnline = async function () {
+
+    try {
+
+        await API.status();
+
+        return true;
+
+    }
+
+    catch {
+
+        return false;
+
+    }
+
+};
+
+
+
+/**
+ * Returns the Apps Script URL.
+ *
+ * Mainly useful for debugging.
+ */
+
+API.getBaseUrl = function () {
+
+    return API.BASE_URL;
+
+};
+
+
+
+/**
+ * Returns the current API version.
+ */
+
+API.getVersion = function () {
+
+    return API.VERSION;
+
+};
+
+
+
+/**
+ * Prints useful debugging information.
+ */
+
+API.info = function () {
+
+    console.group("Holiday Restaurant League API");
+
+    console.log("Version:", API.VERSION);
+
+    console.log("Backend:", API.BASE_URL);
+
+    console.log("Timeout:", API.TIMEOUT);
+
+    console.log("Debug:", API.DEBUG);
+
+    console.groupEnd();
+
+};
+
+
+
+/**
+ * Freeze the API object.
+ *
+ * Prevents accidental overwriting of functions
+ * elsewhere in the website.
+ */
+
+Object.freeze(API);
+
+
+
+/****************************************************************
+ * END OF FILE
+ ****************************************************************/
