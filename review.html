@@ -1,1 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Today's Scores</title>
+
+<link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+
+<header class="page-header">
+
+<h1>📋 Today's Scores</h1>
+
+<p id="restaurantTitle">
+
+Loading...
+
+</p>
+
+</header>
+
+
+
+<main class="container">
+
+<div class="card">
+
+<button id="refreshButton">
+
+Refresh Scores
+
+</button>
+
+</div>
+
+
+
+<div class="card">
+
+<table id="scoresTable">
+
+<thead>
+
+<tr>
+
+<th>Person</th>
+
+<th>Food</th>
+
+<th>Service</th>
+
+<th>Ambience</th>
+
+<th>Overall</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>
+
+Submission Status
+
+</h2>
+
+<ul id="submissionList">
+
+</ul>
+
+</div>
+
+
+
+<div class="card">
+
+<button
+onclick="window.location.href='index.html'">
+
+← Return Home
+
+</button>
+
+</div>
+
+</main>
+
+
+
+<script src="api.js"></script>
+
+<script>
+
+const participants = [
+
+"Darren",
+
+"Sarah",
+
+"Sophie",
+
+"George",
+
+"Seb",
+
+"Fynn"
+
+];
+
+
+
+window.onload = async function(){
+
+    await refreshPage();
+
+};
+
+
+
+document
+.getElementById("refreshButton")
+.onclick = refreshPage;
+
+
+
+async function refreshPage(){
+
+    try{
+
+        const settings =
+            await API.getSettings();
+
+        document
+        .getElementById("restaurantTitle")
+        .innerHTML =
+
+        settings.currentRestaurant +
+
+        " • "
+
+        +
+
+        settings.currentRestaurantTime;
+
+
+
+        const scores =
+            await API.getTodaysScores();
+
+
+
+        populateTable(scores);
+
+        populateSubmissionStatus(scores);
+
+    }
+
+    catch(error){
+
+        alert(error.message);
+
+    }
+
+}
+
+
+
+function populateTable(scores){
+
+    const tbody =
+        document
+        .querySelector(
+            "#scoresTable tbody"
+        );
+
+    tbody.innerHTML = "";
+
+
+
+    scores.forEach(score=>{
+
+        const row =
+            document.createElement("tr");
+
+        row.innerHTML =
+
+        "<td>"+score.person+"</td>"
+
+        +
+
+        "<td>"+score.food+"</td>"
+
+        +
+
+        "<td>"+score.service+"</td>"
+
+        +
+
+        "<td>"+score.ambiance+"</td>"
+
+        +
+
+        "<td>"+score.overall+"</td>";
+
+
+
+        tbody.appendChild(row);
+
+    });
+
+}
+
+
+
+function populateSubmissionStatus(scores){
+
+    const submitted =
+        scores.map(
+
+            score=>score.person
+
+        );
+
+
+
+    const list =
+        document
+        .getElementById(
+            "submissionList"
+        );
+
+
+
+    list.innerHTML = "";
+
+
+
+    participants.forEach(person=>{
+
+        const item =
+            document.createElement("li");
+
+
+
+        if(
+
+            submitted.includes(person)
+
+        ){
+
+            item.innerHTML =
+
+            "✅ " + person;
+
+        }
+
+        else{
+
+            item.innerHTML =
+
+            "⌛ " + person;
+
+        }
+
+
+
+        list.appendChild(item);
+
+    });
+
+}
+
+</script>
+
+</body>
+
+</html>
