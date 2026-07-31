@@ -171,14 +171,150 @@
 
 <script>
 
-//
-// Placeholder
-//
-// Response 2 will replace this with
-// the full JavaScript.
-//
+const ADMIN_PASSWORD = "holiday";
 
-console.log("Setup page loaded.");
+const loginCard = document.getElementById("loginCard");
+const settingsCard = document.getElementById("settingsCard");
+const dangerCard = document.getElementById("dangerCard");
+
+const loginButton = document.getElementById("loginButton");
+const saveButton = document.getElementById("saveButton");
+const deleteButton = document.getElementById("deleteButton");
+
+loginButton.addEventListener("click", login);
+
+saveButton.addEventListener("click", saveSettings);
+
+deleteButton.addEventListener("click", deleteScores);
+
+
+
+async function login(){
+
+    const password =
+        document.getElementById("password").value;
+
+    const message =
+        document.getElementById("loginMessage");
+
+    if(password !== ADMIN_PASSWORD){
+
+        message.textContent =
+            "Incorrect password.";
+
+        return;
+
+    }
+
+    message.textContent = "";
+
+    loginCard.classList.add("hidden");
+
+    settingsCard.classList.remove("hidden");
+
+    dangerCard.classList.remove("hidden");
+
+    await loadSettings();
+
+}
+
+
+
+async function loadSettings(){
+
+    try{
+
+        const settings =
+            await API.getSettings();
+
+        document.getElementById("holidayName").value =
+            settings.holidayName || "";
+
+        document.getElementById("holidayDay").value =
+            settings.holidayDay || "";
+
+        document.getElementById("restaurantName").value =
+            settings.currentRestaurant || "";
+
+        document.getElementById("restaurantTime").value =
+            settings.currentRestaurantTime || "";
+
+    }
+
+    catch(error){
+
+        alert(error.message);
+
+    }
+
+}
+
+
+
+async function saveSettings(){
+
+    try{
+
+        await API.updateSettings({
+
+            holidayName:
+                document.getElementById("holidayName").value,
+
+            holidayDay:
+                document.getElementById("holidayDay").value,
+
+            currentRestaurant:
+                document.getElementById("restaurantName").value,
+
+            currentRestaurantTime:
+                document.getElementById("restaurantTime").value
+
+        });
+
+        document.getElementById("saveMessage").textContent =
+            "✓ Saved Successfully";
+
+    }
+
+    catch(error){
+
+        document.getElementById("saveMessage").textContent =
+            error.message;
+
+    }
+
+}
+
+
+
+async function deleteScores(){
+
+    if(!confirm(
+        "Delete ALL submissions for today's restaurant?"
+    )){
+
+        return;
+
+    }
+
+    try{
+
+        const result =
+            await API.deleteTodaysScores();
+
+        document.getElementById("deleteMessage").textContent =
+            result.message;
+
+    }
+
+    catch(error){
+
+        document.getElementById("deleteMessage").textContent =
+            error.message;
+
+    }
+
+}
 
 </script>
 
