@@ -267,3 +267,42 @@ line-height:2;
 margin-bottom:10px;
 
 }
+/* ---------- Home Page ---------- */
+
+.menuGrid{
+
+display:grid;
+
+grid-template-columns:1fr;
+
+gap:12px;
+
+}
+
+.menuGrid button{
+
+font-size:18px;
+
+padding:18px;
+
+}
+
+#progressDisplay{
+
+text-align:center;
+
+font-size:40px;
+
+margin:10px 0;
+
+color:#2563eb;
+
+}
+
+ol{
+
+font-size:20px;
+
+line-height:2;
+
+}
