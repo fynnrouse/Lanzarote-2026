@@ -230,7 +230,24 @@ let ambianceScore = null;
 
 let currentRestaurant = "";
 
+function updateProgress(){
 
+    let progress = 0;
+
+    if(selectedPerson) progress++;
+
+    if(foodScore!==null) progress++;
+
+    if(serviceScore!==null) progress++;
+
+    if(ambianceScore!==null) progress++;
+
+    document
+    .getElementById("progressText")
+    .innerHTML =
+        progress + " of 4 completed";
+
+}
 
 window.onload = async function(){
 
@@ -295,6 +312,8 @@ function createPersonButtons(){
             selectedPerson =
                 this.dataset.person;
 
+            updateProgress();
+
         };
 
     });
@@ -349,6 +368,8 @@ function createGrid(id,callback){
 
             callback(i);
 
+            updateProgress();
+
         };
 
         container.appendChild(button);
@@ -361,64 +382,86 @@ function createGrid(id,callback){
 
 document
 .getElementById("submitButton")
-.onclick=async function(){
+.onclick = async function(){
 
     if(
+
         !selectedPerson ||
+
         foodScore===null ||
+
         serviceScore===null ||
+
         ambianceScore===null
+
     ){
 
         alert(
-        "Please complete every field."
+            "Please complete every section."
         );
 
         return;
 
     }
 
+    const button =
+        document.getElementById(
+            "submitButton"
+        );
+
+    button.disabled = true;
+
+    button.innerHTML = "Submitting...";
+
     try{
 
-        const response =
-            await API.submitScore({
+        await API.submitScore({
 
-                person:selectedPerson,
+            person:selectedPerson,
 
-                restaurant:
-                currentRestaurant,
+            restaurant:currentRestaurant,
 
-                food:foodScore,
+            food:foodScore,
 
-                service:serviceScore,
+            service:serviceScore,
 
-                ambiance:ambianceScore
+            ambiance:ambianceScore
 
-            });
+        });
 
-        document.getElementById(
-            "submitMessage"
-        ).innerHTML=
+        document
+        .getElementById("submitCard")
+        .classList.add("hidden");
 
-        "🎉 Thank you "
-        + selectedPerson
-        + "!";
+        document
+        .getElementById("thankYouCard")
+        .classList.remove("hidden");
+
+        document
+        .getElementById("thankYouText")
+        .innerHTML =
+
+            "Thank you <strong>"
+
+            + selectedPerson +
+
+            "</strong> for submitting your scores.";
 
     }
 
     catch(error){
 
-        document.getElementById(
-            "submitMessage"
-        ).innerHTML=
-        error.message;
+        button.disabled = false;
+
+        button.innerHTML =
+
+            "Submit Scores";
+
+        document
+        .getElementById("submitMessage")
+        .innerHTML =
+            error.message;
 
     }
 
 };
-
-</script>
-
-</body>
-
-</html>
