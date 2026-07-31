@@ -2,183 +2,236 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lanzarote 2026</title>
-    <link rel="stylesheet" href="styles.css">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Holiday Restaurant League</title>
+
+<link rel="stylesheet" href="styles.css">
+
 </head>
 
 <body>
-    <!-- Full-width Hamburger Banner -->
-    <button class="menu-button" id="menuBtn" aria-label="Open menu">
-        <span class="menu-icon">☰</span>
-        <span class="menu-text">Menu</span>
-    </button>
 
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar" id="sidebar">
-        <button class="close-button" id="closeBtn">✕</button>
-        <ul class="nav-menu">
-            <li><a href="#home" class="nav-link active">Home</a></li>
-            <li><a href="#review" class="nav-link">Review</a></li>
-            <li><a href="#history" class="nav-link">History</a></li>
-            <li><a href="#setup" class="nav-link locked">Setup 🔒</a></li>
-        </ul>
-    </nav>
+<header class="page-header">
 
-    <!-- Main Content -->
-    <main class="container">
-        <!-- Header Section -->
-        <header class="header">
-            <h1 class="title">Lanzarote 2026</h1>
-            <div class="date-info">
-                <span class="current-date" id="currentDate">Loading...</span>
-                <span class="day-number" id="dayNumber">Day 0</span>
-                <span class="date-emoji" id="dateEmoji">🌴</span>
-            </div>
-        </header>
+<h1>🍽 Holiday Restaurant League</h1>
 
-        <!-- Home Page -->
-        <section id="homePage" class="page-section active">
-            <!-- Featured Image -->
-            <section class="featured-image">
-                <img id="featuredImg" src="https://via.placeholder.com/400x300?text=Restaurant" alt="Featured Restaurant">
-            </section>
+<p id="holidayName">
 
-            <!-- Submit Button -->
-            <section class="action-section">
-                <button class="submit-button" id="submitBtn">Submit Score</button>
-            </section>
+Loading Holiday...
 
-            <!-- Scoreboard Section -->
-            <section class="scoreboard-section">
-                <h2>Leaderboard</h2>
-                <div class="scoreboard" id="scoreboard">
-                    <div class="score-card">
-                        <span class="rank">1</span>
-                        <span class="restaurant-name">Restaurant Name</span>
-                        <span class="score">8.5</span>
-                    </div>
-                    <div class="score-card">
-                        <span class="rank">2</span>
-                        <span class="restaurant-name">Restaurant Name</span>
-                        <span class="score">8.0</span>
-                    </div>
-                    <div class="score-card">
-                        <span class="rank">3</span>
-                        <span class="restaurant-name">Restaurant Name</span>
-                        <span class="score">7.5</span>
-                    </div>
-                </div>
-            </section>
+</p>
 
-            <!-- See More Button -->
-            <section class="footer-section">
-                <button class="see-more-button" id="seeMoreBtn">See More Restaurants</button>
-            </section>
-        </section>
+</header>
 
-        <!-- Submission Page -->
-        <section id="submissionPage" class="page-section" style="display: none;">
-            <div id="submissionForm" class="submission-form">
-                <h2 class="submission-title">Lanzarote 2026</h2>
 
-                <!-- Restaurant Name -->
-                <div class="form-section">
-                    <h3 class="current-restaurant-label">Current Restaurant</h3>
-                    <div class="restaurant-name-display" id="restaurantDisplay">Loading...</div>
-                </div>
 
-                <!-- Person Selector -->
-                <div class="form-section">
-                    <label class="form-label">Person</label>
-                    <div class="person-buttons" id="personButtons">
-                        <button class="person-btn" data-person="Darren">Darren</button>
-                        <button class="person-btn" data-person="Sarah">Sarah</button>
-                        <button class="person-btn" data-person="Sophie">Sophie</button>
-                        <button class="person-btn" data-person="George">George</button>
-                        <button class="person-btn" data-person="Seb">Seb</button>
-                        <button class="person-btn" data-person="Fynn">Fynn</button>
-                    </div>
-                    <input type="hidden" id="selectedPerson" value="">
-                </div>
+<main class="container">
 
-                <!-- Food Score -->
-                <div class="form-section">
-                    <label class="form-label">Food</label>
-                    <div class="score-buttons" id="foodButtons">
-                        <button class="score-btn" data-score="1">1</button>
-                        <button class="score-btn" data-score="2">2</button>
-                        <button class="score-btn" data-score="3">3</button>
-                        <button class="score-btn" data-score="4">4</button>
-                        <button class="score-btn" data-score="5">5</button>
-                        <button class="score-btn" data-score="6">6</button>
-                        <button class="score-btn" data-score="7">7</button>
-                        <button class="score-btn" data-score="8">8</button>
-                        <button class="score-btn" data-score="9">9</button>
-                        <button class="score-btn" data-score="10">10</button>
-                    </div>
-                    <input type="hidden" id="foodScore" value="">
-                </div>
+<!-- TODAY -->
 
-                <!-- Service Score -->
-                <div class="form-section">
-                    <label class="form-label">Service</label>
-                    <div class="score-buttons" id="serviceButtons">
-                        <button class="score-btn" data-score="1">1</button>
-                        <button class="score-btn" data-score="2">2</button>
-                        <button class="score-btn" data-score="3">3</button>
-                        <button class="score-btn" data-score="4">4</button>
-                        <button class="score-btn" data-score="5">5</button>
-                        <button class="score-btn" data-score="6">6</button>
-                        <button class="score-btn" data-score="7">7</button>
-                        <button class="score-btn" data-score="8">8</button>
-                        <button class="score-btn" data-score="9">9</button>
-                        <button class="score-btn" data-score="10">10</button>
-                    </div>
-                    <input type="hidden" id="serviceScore" value="">
-                </div>
+<div class="card">
 
-                <!-- Ambiance Score -->
-                <div class="form-section">
-                    <label class="form-label">Ambiance</label>
-                    <div class="score-buttons" id="ambianceButtons">
-                        <button class="score-btn" data-score="1">1</button>
-                        <button class="score-btn" data-score="2">2</button>
-                        <button class="score-btn" data-score="3">3</button>
-                        <button class="score-btn" data-score="4">4</button>
-                        <button class="score-btn" data-score="5">5</button>
-                        <button class="score-btn" data-score="6">6</button>
-                        <button class="score-btn" data-score="7">7</button>
-                        <button class="score-btn" data-score="8">8</button>
-                        <button class="score-btn" data-score="9">9</button>
-                        <button class="score-btn" data-score="10">10</button>
-                    </div>
-                    <input type="hidden" id="ambianceScore" value="">
-                </div>
+<h2>
 
-                <!-- Comments -->
-                <div class="form-section">
-                    <label for="comments" class="form-label">Comments</label>
-                    <textarea id="comments" class="comments-box" placeholder="Optional comments..." rows="4"></textarea>
-                </div>
+Today's Restaurant
 
-                <!-- Submit Button -->
-                <button class="large-submit-btn" id="formSubmitBtn">Submit</button>
-            </div>
+</h2>
 
-            <!-- Thank You Message -->
-            <div id="thankYouMessage" class="thank-you-message" style="display: none;">
-                <h2>Thank you, your scores have been submitted.</h2>
-                <button class="return-home-btn" id="returnHomeBtn">Return to Home</button>
-            </div>
-        </section>
-    </main>
+<h3 id="restaurantName">
 
-    <!-- Overlay for Menu -->
-    <div class="overlay" id="overlay"></div>
+Loading...
 
-    <script src="script.js"></script>
+</h3>
+
+<p id="restaurantTime">
+
+Loading...
+
+</p>
+
+<p id="holidayDay">
+
+Day ...
+
+</p>
+
+</div>
+
+
+
+<!-- SUBMISSION PROGRESS -->
+
+<div class="card">
+
+<h2>
+
+Today's Progress
+
+</h2>
+
+<h1 id="progressDisplay">
+
+0 / 6 Submitted
+
+</h1>
+
+</div>
+
+
+
+<!-- NAVIGATION -->
+
+<div class="card">
+
+<h2>
+
+Menu
+
+</h2>
+
+<div class="menuGrid">
+
+<button
+onclick="window.location.href='submit.html'">
+
+Submit Scores
+
+</button>
+
+<button
+onclick="window.location.href='review.html'">
+
+Today's Review
+
+</button>
+
+<button
+onclick="window.location.href='graphs.html'">
+
+Graphs
+
+</button>
+
+<button
+onclick="window.location.href='history.html'">
+
+History
+
+</button>
+
+<button
+onclick="window.location.href='setup.html'">
+
+Admin Setup
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- LEADERBOARD -->
+
+<div class="card">
+
+<h2>
+
+🏆 Holiday Leaderboard
+
+</h2>
+
+<p>
+
+(Coming in Milestone 2)
+
+</p>
+
+<ol>
+
+<li>🥇 ---</li>
+
+<li>🥈 ---</li>
+
+<li>🥉 ---</li>
+
+</ol>
+
+</div>
+
+
+
+</main>
+
+<script src="api.js"></script>
+
+<script>
+
+window.onload = async function(){
+
+    await loadHomepage();
+
+};
+
+
+
+async function loadHomepage(){
+
+    try{
+
+        const settings =
+            await API.getSettings();
+
+        document
+        .getElementById("holidayName")
+        .innerHTML =
+        settings.holidayName;
+
+        document
+        .getElementById("holidayDay")
+        .innerHTML =
+        "Day " +
+        settings.holidayDay;
+
+        document
+        .getElementById("restaurantName")
+        .innerHTML =
+        settings.currentRestaurant;
+
+        document
+        .getElementById("restaurantTime")
+        .innerHTML =
+        settings.currentRestaurantTime;
+
+
+
+        const scores =
+            await API.getTodaysScores();
+
+        document
+        .getElementById("progressDisplay")
+        .innerHTML =
+
+        scores.length +
+
+        " / 6 Submitted";
+
+    }
+
+    catch(error){
+
+        alert(error.message);
+
+    }
+
+}
+
+</script>
+
 </body>
 
 </html>
