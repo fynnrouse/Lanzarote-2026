@@ -1,1 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Submit Scores</title>
+
+<link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+
+<header class="page-header">
+
+<h1>🍽 Holiday Restaurant League</h1>
+
+<p>Restaurant Scoring</p>
+
+</header>
+
+
+
+<main class="container">
+
+<div class="card">
+
+<h2 id="restaurantName">
+
+Loading Restaurant...
+
+</h2>
+
+<p id="restaurantTime">
+
+Loading Time...
+
+</p>
+
+</div>
+
+
+
+<!-- PERSON -->
+
+<div class="card">
+
+<h2>
+
+Who are you?
+
+</h2>
+
+<div class="person-grid">
+
+<button class="personButton"
+data-person="Darren">
+
+Darren
+
+</button>
+
+<button class="personButton"
+data-person="Sarah">
+
+Sarah
+
+</button>
+
+<button class="personButton"
+data-person="Sophie">
+
+Sophie
+
+</button>
+
+<button class="personButton"
+data-person="George">
+
+George
+
+</button>
+
+<button class="personButton"
+data-person="Seb">
+
+Seb
+
+</button>
+
+<button class="personButton"
+data-person="Fynn">
+
+Fynn
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- FOOD -->
+
+<div class="card">
+
+<h2>🍔 Food</h2>
+
+<div
+id="foodButtons"
+class="scoreGrid">
+
+</div>
+
+</div>
+
+
+
+<!-- SERVICE -->
+
+<div class="card">
+
+<h2>😊 Service</h2>
+
+<div
+id="serviceButtons"
+class="scoreGrid">
+
+</div>
+
+</div>
+
+
+
+<!-- AMBIENCE -->
+
+<div class="card">
+
+<h2>🕯 Ambience</h2>
+
+<div
+id="ambianceButtons"
+class="scoreGrid">
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<button id="submitButton">
+
+Submit Scores
+
+</button>
+
+<p id="submitMessage"></p>
+
+</div>
+
+<div class="card">
+
+<button
+onclick="window.location.href='index.html'">
+
+← Back Home
+
+</button>
+
+</div>
+
+</main>
+
+
+
+<script src="api.js"></script>
+
+<script>
+
+let selectedPerson = null;
+
+let foodScore = null;
+
+let serviceScore = null;
+
+let ambianceScore = null;
+
+let currentRestaurant = "";
+
+
+
+window.onload = async function(){
+
+    await loadRestaurant();
+
+    createScoreButtons();
+
+    createPersonButtons();
+
+};
+
+
+
+async function loadRestaurant(){
+
+    try{
+
+        const settings =
+            await API.getSettings();
+
+        currentRestaurant =
+            settings.currentRestaurant;
+
+        document.getElementById(
+            "restaurantName"
+        ).textContent =
+            settings.currentRestaurant;
+
+        document.getElementById(
+            "restaurantTime"
+        ).textContent =
+            settings.currentRestaurantTime;
+
+    }
+
+    catch(error){
+
+        alert(error.message);
+
+    }
+
+}
+
+
+
+function createPersonButtons(){
+
+    const buttons =
+        document.querySelectorAll(
+            ".personButton"
+        );
+
+    buttons.forEach(button=>{
+
+        button.onclick=function(){
+
+            buttons.forEach(b=>
+                b.classList.remove("selected"));
+
+            this.classList.add("selected");
+
+            selectedPerson =
+                this.dataset.person;
+
+        };
+
+    });
+
+}
+
+
+
+function createScoreButtons(){
+
+    createGrid(
+        "foodButtons",
+        value=>foodScore=value
+    );
+
+    createGrid(
+        "serviceButtons",
+        value=>serviceScore=value
+    );
+
+    createGrid(
+        "ambianceButtons",
+        value=>ambianceScore=value
+    );
+
+}
+
+
+
+function createGrid(id,callback){
+
+    const container =
+        document.getElementById(id);
+
+    for(let i=1;i<=10;i++){
+
+        const button =
+            document.createElement("button");
+
+        button.innerText=i;
+
+        button.className="scoreButton";
+
+        button.onclick=function(){
+
+            container
+            .querySelectorAll("button")
+            .forEach(b=>
+                b.classList.remove("selected"));
+
+            this.classList.add("selected");
+
+            callback(i);
+
+        };
+
+        container.appendChild(button);
+
+    }
+
+}
+
+
+
+document
+.getElementById("submitButton")
+.onclick=async function(){
+
+    if(
+        !selectedPerson ||
+        foodScore===null ||
+        serviceScore===null ||
+        ambianceScore===null
+    ){
+
+        alert(
+        "Please complete every field."
+        );
+
+        return;
+
+    }
+
+    try{
+
+        const response =
+            await API.submitScore({
+
+                person:selectedPerson,
+
+                restaurant:
+                currentRestaurant,
+
+                food:foodScore,
+
+                service:serviceScore,
+
+                ambiance:ambianceScore
+
+            });
+
+        document.getElementById(
+            "submitMessage"
+        ).innerHTML=
+
+        "🎉 Thank you "
+        + selectedPerson
+        + "!";
+
+    }
+
+    catch(error){
+
+        document.getElementById(
+            "submitMessage"
+        ).innerHTML=
+        error.message;
+
+    }
+
+};
+
+</script>
+
+</body>
+
+</html>
