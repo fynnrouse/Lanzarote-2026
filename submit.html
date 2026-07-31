@@ -107,7 +107,18 @@ Fynn
 
 
 <!-- FOOD -->
+<div class="card">
 
+<h2>Your Progress</h2>
+
+<p id="progressText">
+
+0 of 4 completed
+
+</p>
+
+</div>
+    
 <div class="card">
 
 <h2>🍔 Food</h2>
@@ -154,7 +165,7 @@ class="scoreGrid">
 
 
 
-<div class="card">
+<div class="card" id="submitCard">
 
 <button id="submitButton">
 
@@ -163,6 +174,30 @@ Submit Scores
 </button>
 
 <p id="submitMessage"></p>
+
+</div>
+
+
+
+<div
+class="card hidden"
+id="thankYouCard"
+>
+
+<h2>
+
+🎉 Score Submitted
+
+</h2>
+
+<p id="thankYouText"></p>
+
+<button
+onclick="window.location.href='index.html'">
+
+Return Home
+
+</button>
 
 </div>
 
