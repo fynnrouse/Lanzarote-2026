@@ -1,1 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Setup | Holiday Restaurant League</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+
+<header class="page-header">
+
+    <h1>⚙️ Holiday Restaurant League</h1>
+    <p>Administrator Setup</p>
+
+</header>
+
+<main class="container">
+
+    <!-- LOGIN CARD -->
+
+    <section id="loginCard" class="card">
+
+        <h2>Administrator Login</h2>
+
+        <p>
+            Enter the admin password to unlock the settings.
+        </p>
+
+        <label for="password">
+            Password
+        </label>
+
+        <input
+            type="password"
+            id="password"
+            autocomplete="off"
+        >
+
+        <button id="loginButton">
+            Login
+        </button>
+
+        <p id="loginMessage" class="message"></p>
+
+    </section>
+
+
+
+    <!-- SETTINGS CARD -->
+
+    <section
+        id="settingsCard"
+        class="card hidden"
+    >
+
+        <h2>Holiday Settings</h2>
+
+        <label for="holidayName">
+            Holiday Name
+        </label>
+
+        <input
+            id="holidayName"
+            type="text"
+        >
+
+        <label for="holidayDay">
+            Holiday Day
+        </label>
+
+        <input
+            id="holidayDay"
+            type="number"
+            min="1"
+        >
+
+        <label for="restaurantName">
+            Today's Restaurant
+        </label>
+
+        <input
+            id="restaurantName"
+            type="text"
+        >
+
+        <label for="restaurantTime">
+            Booking Time
+        </label>
+
+        <input
+            id="restaurantTime"
+            type="time"
+        >
+
+        <button id="saveButton">
+
+            Save Changes
+
+        </button>
+
+        <p
+            id="saveMessage"
+            class="message"
+        ></p>
+
+    </section>
+
+
+
+    <!-- DANGER ZONE -->
+
+    <section
+        id="dangerCard"
+        class="card hidden danger-card"
+    >
+
+        <h2>Danger Zone</h2>
+
+        <p>
+
+            Delete every submission for today's restaurant.
+
+        </p>
+
+        <button id="deleteButton">
+
+            Delete Today's Scores
+
+        </button>
+
+        <p
+            id="deleteMessage"
+            class="message"
+        ></p>
+
+    </section>
+
+
+
+    <!-- NAVIGATION -->
+
+    <section class="card">
+
+        <button
+            id="homeButton"
+            onclick="window.location.href='index.html';"
+        >
+
+            ← Return Home
+
+        </button>
+
+    </section>
+
+</main>
+
+
+
+<!-- API -->
+
+<script src="api.js"></script>
+
+<!-- Page Logic -->
+
+<script>
+
+//
+// Placeholder
+//
+// Response 2 will replace this with
+// the full JavaScript.
+//
+
+console.log("Setup page loaded.");
+
+</script>
+
+</body>
+
+</html>
